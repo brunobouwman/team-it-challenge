@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Feed from "../../components/Feed";
 import { useBaseContext } from "../../contexts";
 import { LayoutEnum } from "../../types/common";

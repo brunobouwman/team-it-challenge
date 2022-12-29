@@ -11,6 +11,7 @@ export interface IPost {
   publish_date: string;
   slug: string;
   title: string;
+  comments?: IComment[];
 }
 
 export interface IComment {
@@ -18,7 +19,7 @@ export interface IComment {
   date: string;
   id: number;
   parent_id: number | null;
-  postID: number;
+  postId: number;
   user: string;
 }
 

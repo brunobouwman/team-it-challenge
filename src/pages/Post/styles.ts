@@ -1,9 +1,37 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { Directions } from ".";
 
 export const Container = styled.div`
   width: 100%;
-  min-height: fit-content;
+  height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+
+  > div:nth-child(2) {
+    margin-top: 5rem;
+  }
+`;
+
+interface INavigationContainer {
+  position: Directions;
+}
+
+export const NavigationContainer = styled.div<INavigationContainer>`
+  height: 100%;
+  width: 3rem;
+  position: fixed;
+  top: 50%;
+
+  ${(props) =>
+    props.position === Directions.RIGHT &&
+    css`
+      right: 1rem;
+    `}
+
+  ${(props) =>
+    props.position === Directions.LEFT &&
+    css`
+      left: 1rem;
+    `}
 `;

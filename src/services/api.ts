@@ -1,3 +1,6 @@
+import { Console } from "console";
+import { IComment } from "../types/common";
+
 enum Method {
   GET = "GET",
   POST = "POST",
@@ -15,6 +18,7 @@ interface Props {
   endpoint: Endpoints;
   comments?: boolean;
   id?: number;
+  payload?: IComment;
 }
 
 export enum Endpoints {
@@ -72,10 +76,15 @@ const get = async (props: Props, method: Method) => {
 };
 
 const post = async (props: Props, method: Method) => {
-  const { endpoint, id } = props;
+  const { endpoint, id, payload } = props;
 
   const request = await fetch(`${endpoint}/posts/${id}/comments`, {
     method: method.toString(),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
   });
 
   if (!request.ok) {
@@ -92,10 +101,17 @@ const post = async (props: Props, method: Method) => {
 };
 
 const put = async (props: Props, method: Method) => {
-  const { endpoint, id } = props;
+  const { endpoint, id, payload } = props;
+
+  console.log("payload", payload);
 
   const request = await fetch(`${endpoint}/comments/${id}`, {
     method: method.toString(),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
   });
 
   if (!request.ok) {

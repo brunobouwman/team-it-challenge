@@ -27,7 +27,7 @@ const NavBar: React.FC = () => {
 
   return (
     <Container>
-      <h3 onClick={handleNavigate.bind(this, "/")}>LOGO</h3>
+      <h3 onClick={handleNavigate.bind(this, "/")}>My Blog</h3>
       <ActionsContainer>
         <span
           onClick={() => {

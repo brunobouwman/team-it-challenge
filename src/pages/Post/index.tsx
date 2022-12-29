@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Card from "../../components/Card";
 import { useBaseContext } from "../../contexts";
-import api, { Endpoints } from "../../services/api";
 import { IComment, ILocation, IPost } from "../../types/common";
-import { Container } from "./styles";
+import { fetchComments } from "../../utils";
+import { paths } from "../../utils/paths";
+import { Container, NavigationContainer } from "./styles";
 
-enum Directions {
+export enum Directions {
   LEFT = "left",
   RIGHT = "right",
 }
@@ -16,23 +17,28 @@ const Post: React.FC = () => {
   const selectedPost = location.state as ILocation;
   const [featured, setFeatured] = useState<IPost>(selectedPost.post);
   const [comments, setComments] = useState<IComment[]>();
+  const basePath = `@blog/${paths.filter((path) => path.includes("posts"))[0]}`;
   const { getPosts } = useBaseContext();
 
   useEffect(() => {
-    selectedPost.post && setFeatured(selectedPost.post);
+    const cachedPosts = localStorage.getItem(basePath);
+    if (!cachedPosts) return;
 
+    const parsedPosts: IPost[] = JSON.parse(cachedPosts);
+
+    const featuredPost = parsedPosts.filter((post) => post.id === featured.id);
+
+    if (featuredPost.length === 0 || featuredPost.length > 1) return;
+
+    setComments(featuredPost[0].comments);
+  }, [featured, basePath]);
+
+  useEffect(() => {
     (async () => {
-      const fetchedComments = await api.get({
-        endpoint: Endpoints.LOCAL,
-        comments: true,
-        id: selectedPost.post.id,
-      });
-
-      if (Array.isArray(fetchedComments)) {
-        setComments(fetchedComments);
-      }
+      const response = await fetchComments(featured.id);
+      Array.isArray(response) && setComments(response);
     })();
-  }, []);
+  }, [featured]);
 
   const handleClick = async (direction: Directions) => {
     const postIndex = getPosts().findIndex((post) => post.id === featured.id);
@@ -58,9 +64,18 @@ const Post: React.FC = () => {
 
   return (
     <Container>
-      <span onClick={handleClick.bind(null, Directions.LEFT)}>LEFT</span>
-      <Card content={featured} isFeatured={true} comments={comments} />
-      <span onClick={handleClick.bind(null, Directions.RIGHT)}>RIGHT</span>
+      <NavigationContainer position={Directions.LEFT}>
+        <span onClick={handleClick.bind(null, Directions.LEFT)}>LEFT</span>
+      </NavigationContainer>
+      <Card
+        content={featured}
+        isFeatured={true}
+        comments={comments}
+        updateComment={setComments}
+      />
+      <NavigationContainer position={Directions.RIGHT}>
+        <span onClick={handleClick.bind(null, Directions.RIGHT)}>RIGHT</span>
+      </NavigationContainer>
     </Container>
   );
 };

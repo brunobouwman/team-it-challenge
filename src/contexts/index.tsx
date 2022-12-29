@@ -9,6 +9,8 @@ export interface IContext {
   setFavorites: (favorites: IPost[]) => void;
   getLayout: () => boolean;
   setLayout: (layout: boolean) => void;
+  getCommentIndex: () => number;
+  setCommentIndex: (index: number) => void;
 }
 
 type ContextProps = {
@@ -21,10 +23,12 @@ const Context: React.FC<ContextProps> = ({ children }) => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [favorites, setFavorites] = useState<IPost[]>([]);
   const [layout, setLayout] = useState(false);
+  const [commentIndex, setCommentIndex] = useState(0);
 
   const getPosts = () => posts;
   const getFavorites = () => favorites;
   const getLayout = () => layout;
+  const getCommentIndex = () => commentIndex;
 
   const values = {
     getPosts,
@@ -33,6 +37,8 @@ const Context: React.FC<ContextProps> = ({ children }) => {
     setFavorites: (favorites: IPost[]) => setFavorites(favorites),
     getLayout,
     setLayout: (layout: boolean) => setLayout(layout),
+    getCommentIndex,
+    setCommentIndex: (index: number) => setCommentIndex(index),
   };
 
   return <BaseContext.Provider value={values}>{children}</BaseContext.Provider>;
