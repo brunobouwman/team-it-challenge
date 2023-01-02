@@ -23,6 +23,12 @@ export const NavigationContainer = styled.div<INavigationContainer>`
   position: fixed;
   top: 50%;
 
+  > img {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+  }
+
   ${(props) =>
     props.position === Directions.RIGHT &&
     css`

@@ -98,7 +98,17 @@
       "parent_id": null,
       "user": "Amelia",
       "date": "2016-02-23",
-      "content": "Nulla Donec quis tor asdasdtor."
+      "content": "Nulla Donec quis tor asdasdtor. DOIDAO",
+      "conversation": [
+        {
+          "content": "UWUW",
+          "date": "1672698553296",
+          "id": 1,
+          "parent_id": null,
+          "postId": 1,
+          "user": "Bruno"
+        }
+      ]
     },
     {
       "id": 2,
@@ -138,7 +148,7 @@
       "parent_id": null,
       "user": "Hermina",
       "date": "2016-03-16",
-      "content": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames. HJHJHJHJHJ"
+      "content": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames."
     },
     {
       "id": 7,
@@ -149,52 +159,31 @@
       "content": "Nunc facilisis nisi vitae dapibus sodales. Proin vitae nunc turpis."
     },
     {
-      "content": "hELLO",
-      "date": "1672335903663",
-      "id": 8,
-      "parent_id": null,
-      "postId": "1",
-      "user": "Bruno"
-    },
-    {
-      "content": "PIUPIUPIUPUIUPIU",
-      "date": "1672336247212",
-      "id": 9,
-      "parent_id": null,
-      "postId": "1",
-      "user": "Bruno"
-    },
-    {
-      "content": "ASDAUSDHAUSHDIAOUSDHAOUSIDHIAUS",
-      "date": "1672336537432",
-      "id": 10,
-      "parent_id": null,
-      "postId": "1",
-      "user": "Bruno"
-    },
-    {
-      "content": "BRANDAO DONZELAO",
-      "date": "1672336559009",
-      "id": 11,
-      "parent_id": null,
-      "postId": "1",
-      "user": "Bruno"
-    },
-    {
-      "content": "QUE CARAÇAS",
-      "date": "1672336698830",
-      "id": 12,
-      "parent_id": null,
-      "postId": "2",
-      "user": "Bruno"
-    },
-    {
-      "content": "NDAIUSHIAUSHDIAUHDIUASHDIU",
-      "date": "1672339552612",
+      "content": "dddddddddddddddddddddddd",
+      "date": "2016-05-22",
       "id": 13,
       "parent_id": null,
       "postId": "1",
-      "user": "Bruno"
+      "user": "Bruno",
+      "conversation": []
+    },
+    {
+      "content": "dasdasdasdasd",
+      "date": "2016-01-22",
+      "id": 14,
+      "parent_id": null,
+      "postId": "1",
+      "user": "Bruno",
+      "conversation": []
+    },
+    {
+      "content": "sndlansdlçk\\zndclj\\nzdçcjkn\\zdçlcjn\\zcçn\\çzljcn",
+      "date": "1672698565009",
+      "id": 15,
+      "parent_id": null,
+      "postId": "1",
+      "user": "Bruno",
+      "conversation": []
     }
   ]
 }

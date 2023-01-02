@@ -7,9 +7,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body, #root, #root>div {
-    min-height: 100vh;
+  html, body, #root {
+    min-height: 100%;
     width: 100%;
+    background-color: ${(props) => props.theme.background};
     &::-webkit-scrollbar {
       width: 0;
       height: 5px;

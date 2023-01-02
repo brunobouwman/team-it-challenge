@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { LeftArrow, RightArrow } from "../../assets";
 import Card from "../../components/Card";
 import { useBaseContext } from "../../contexts";
 import { IComment, ILocation, IPost } from "../../types/common";
@@ -15,6 +16,7 @@ export enum Directions {
 const Post: React.FC = () => {
   const location = useLocation();
   const selectedPost = location.state as ILocation;
+  const navigate = useNavigate();
   const [featured, setFeatured] = useState<IPost>(selectedPost.post);
   const [comments, setComments] = useState<IComment[]>();
   const basePath = `@blog/${paths.filter((path) => path.includes("posts"))[0]}`;
@@ -62,10 +64,23 @@ const Post: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    navigate("/post", {
+      replace: true,
+      state: {
+        post: featured,
+      },
+    });
+  }, [featured]);
+
   return (
     <Container>
       <NavigationContainer position={Directions.LEFT}>
-        <span onClick={handleClick.bind(null, Directions.LEFT)}>LEFT</span>
+        <img
+          src={LeftArrow}
+          alt="left-arrow"
+          onClick={handleClick.bind(null, Directions.LEFT)}
+        />
       </NavigationContainer>
       <Card
         content={featured}
@@ -74,7 +89,11 @@ const Post: React.FC = () => {
         updateComment={setComments}
       />
       <NavigationContainer position={Directions.RIGHT}>
-        <span onClick={handleClick.bind(null, Directions.RIGHT)}>RIGHT</span>
+        <img
+          src={RightArrow}
+          alt="left-arrow"
+          onClick={handleClick.bind(null, Directions.RIGHT)}
+        />
       </NavigationContainer>
     </Container>
   );

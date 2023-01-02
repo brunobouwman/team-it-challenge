@@ -26,12 +26,12 @@ const App: React.FC = () => {
 
     const parsedPosts: IPost[] = JSON.parse(cachedPosts);
     for (const post of parsedPosts) {
-      if (post.comments) {
-        comments.push(...post.comments);
+      if (post.comments && post.comments.length > 0) {
+        post.comments.forEach((comment) => comments.push(comment));
       }
     }
     const highestIndex = Math.max(...comments.map((comment) => comment.id));
-    setCommentIndex(highestIndex + 1);
+    setCommentIndex(highestIndex > 0 ? highestIndex + 1 : 1);
     setPosts(parsedPosts);
   }, []);
 
@@ -42,7 +42,6 @@ const App: React.FC = () => {
 
       setPosts(posts);
       const cachedFavorites = localStorage.getItem(favoritesPath);
-
       if (!cachedFavorites) return;
 
       const parsedFavorites: number[] = JSON.parse(cachedFavorites);

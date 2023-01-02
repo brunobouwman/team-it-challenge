@@ -9,6 +9,7 @@ interface IFeed {
 }
 
 const Feed: React.FC<IFeed> = ({ content, layout }) => {
+  console.log("layout", layout);
   return (
     <Container layout={layout}>
       {content.length !== 0 &&

@@ -21,6 +21,7 @@ export interface IComment {
   parent_id: number | null;
   postId: number;
   user: string;
+  conversation?: IComment[];
 }
 
 export interface ILocation {

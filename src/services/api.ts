@@ -77,6 +77,7 @@ const get = async (props: Props, method: Method) => {
 
 const post = async (props: Props, method: Method) => {
   const { endpoint, id, payload } = props;
+  console.log("payload", payload);
 
   const request = await fetch(`${endpoint}/posts/${id}/comments`, {
     method: method.toString(),
@@ -102,8 +103,6 @@ const post = async (props: Props, method: Method) => {
 
 const put = async (props: Props, method: Method) => {
   const { endpoint, id, payload } = props;
-
-  console.log("payload", payload);
 
   const request = await fetch(`${endpoint}/comments/${id}`, {
     method: method.toString(),
