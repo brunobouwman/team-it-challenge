@@ -23,3 +23,16 @@ export const Container = styled.div<IContainer>`
 
   ${(props) => props.layout === LayoutEnum.GRID && gridFeed}
 `;
+
+export const NoFavorites = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  width: 100;
+  margin-top: 5rem;
+
+  > h2 {
+    color: ${(props) => props.theme.colors.teamIt};
+  }
+`;

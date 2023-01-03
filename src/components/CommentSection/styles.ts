@@ -16,7 +16,7 @@ export const ExpandableSection = styled.div`
   height: fit-content;
   padding: 1rem;
   width: 100%;
-  background-color: red;
+  background-color: ${(props) => props.theme.colors.teamIt};
   border-radius: 0.5rem;
   cursor: default;
   display: flex;
@@ -37,6 +37,13 @@ export const CommentContainer = styled.div`
   gap: 0.5rem;
   align-items: center;
   width: 100%;
+
+  > div:last-of-type {
+    width: 100%;
+    height: 0.05rem;
+    background-color: white;
+    margin-bottom: 1rem;
+  }
 `;
 
 export const Content = styled.div`
@@ -57,16 +64,27 @@ export const EditableContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  min-height: fit-content;
+  height: 3rem;
   width: 100%;
+  overflow: hidden;
 
   > textarea {
     width: 90%;
     font-size: 12px;
     border: none;
     background: transparent;
-    min-height: 3rem;
+    color: ${(props) => props.theme.colors.white};
+    min-height: 2rem;
     resize: none;
+
+    &:focus {
+      outline: none !important;
+    }
+  }
+
+  > span {
+    display: inline-block;
+    font-weight: bold;
   }
 `;
 
@@ -89,29 +107,52 @@ export const ConversationContainer = styled.div<IExpand>`
   transition: all 0.5s ease-in-out;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-left: 1rem;
+  gap: 1rem;
+  margin-left: 2rem;
 
   > div:last-of-type {
-    background-color: blue;
+    background-color: ${(props) => props.theme.colors.teamIt};
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 50%;
+    gap: 0.5rem;
     border-radius: 0.5rem;
-    padding: 0.3rem;
     margin-bottom: 0.5rem;
 
-    >input {
+    > input {
       font-size: 0.8rem;
+      color: ${(props) => props.theme.colors.white};
+      border: 1px solid ${(props) => props.theme.colors.white};
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.5rem;
+      width: 76%;
+
+      &::placeholder {
+        color: ${(props) => props.theme.colors.white};
+      }
     }
+
     > img {
       height: 1rem;
       width: auto;
+      cursor: pointer;
     }
   }
 
   ${(props) => props.expanded && expandedConversation}
+`;
+
+export const ConversationContent = styled.div`
+  width: 80%;
+  overflow: hidden;
+  height: 3rem;
+  border-bottom: 1px solid ${(props) => props.theme.colors.white};
+  display: flex;
+  flex-direction: column;
+
+  > span {
+    font-size: 14px;
+    font-weight: 600;
+  }
 `;
 
 export const ReplyContainer = styled.div`
@@ -127,7 +168,7 @@ export const ReplyContainer = styled.div`
     width: 50%;
 
     > span {
-      color: ${(props) => props.theme.colors.black};
+      color: ${(props) => props.theme.colors.white};
     }
   }
 
@@ -152,11 +193,11 @@ export const ExpandedContainer = styled.div<IExpand>`
   filter: opacity(0);
   transition: all 0.5s ease-in-out;
   margin-top: 0.5rem;
-  background-color: ${(props) => props.theme.colors.red};
+  background-color: ${(props) => props.theme.colors.teamIt};
   border-radius: 0.5rem;
 
   > input {
-    color: white;
+    color: ${(props) => props.theme.colors.white};
     padding: 0.5rem;
     font-size: 12px;
     border-radius: 2rem;
@@ -164,6 +205,10 @@ export const ExpandedContainer = styled.div<IExpand>`
     height: 0;
     filter: opacity(0);
     transition: all 0.5s ease-in-out;
+
+    &::placeholder {
+      color: ${(props) => props.theme.colors.white};
+    }
   }
 
   > img {
@@ -191,4 +236,8 @@ export const DateAndAuthor = styled.div`
   align-items: center;
   gap: 0.5rem;
   flex: 7;
+
+  > span:first-of-type {
+    font-weight: 600;
+  }
 `;

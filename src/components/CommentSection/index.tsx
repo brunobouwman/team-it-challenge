@@ -2,8 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Conversation, Edit, Send } from "../../assets";
 import { useBaseContext } from "../../contexts";
 import api, { Endpoints } from "../../services/api";
-import { IComment, IPost } from "../../types/common";
-import { handleCache } from "../../utils";
+import { getDate, handleCache } from "../../utils";
 import {
   CommentContainer,
   CommentFooter,
@@ -15,7 +14,29 @@ import {
   ExpandedContainer,
   ReplyContainer,
   ConversationContainer,
+  ConversationContent,
 } from "./styles";
+
+interface IPost {
+  author: string;
+  content: string;
+  description: string;
+  id: number;
+  publish_date: string;
+  slug: string;
+  title: string;
+  comments?: IComment[];
+}
+
+interface IComment {
+  content: string;
+  date: string;
+  id: number;
+  parent_id: number | null;
+  postId: number;
+  user: string;
+  conversation?: IComment[];
+}
 
 interface ICommentSection {
   content: IPost;
@@ -37,23 +58,25 @@ const CommentSection: React.FC<ICommentSection> = ({
   const { getCommentIndex, setCommentIndex } = useBaseContext();
 
   useEffect(() => {
-    document.addEventListener("keypress", handleTest);
-    return () => document.removeEventListener("keypress", handleTest);
-  }, []);
+    document.addEventListener("keypress", handleEnter);
+    return () => document.removeEventListener("keypress", handleEnter);
+  });
 
-  const handleTest = (event: KeyboardEvent) => {
+  useEffect(() => {
+    setExpand(false);
+  }, [comments, content]);
+
+  const handleEnter = (event: KeyboardEvent) => {
     if (
       event.key !== "Enter" ||
       !isEditing ||
-      commentRef.current?.value.trim.length === 0
+      commentRef.current?.value.trim.length === 0 ||
+      !expand ||
+      expandConversation
     )
       return;
 
-    handleSubmit();
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditedComment(e.currentTarget.value);
+    isEditing && handleSubmit();
   };
 
   const handleExpandConversation = (commentId: number) => {
@@ -123,7 +146,7 @@ const CommentSection: React.FC<ICommentSection> = ({
       indexes && indexes.length > 0 ? Math.max(...indexes) + 1 : 1;
     const newConversation: IComment = {
       content: reply,
-      date: String(Date.now()),
+      date: getDate(),
       id: highest,
       parent_id: null,
       postId: comment.postId,
@@ -170,7 +193,7 @@ const CommentSection: React.FC<ICommentSection> = ({
 
     const payload: IComment = {
       content: commentRef.current.value,
-      date: String(Date.now()),
+      date: getDate(),
       id: currentIndex,
       parent_id: null,
       postId: content.id,
@@ -194,16 +217,6 @@ const CommentSection: React.FC<ICommentSection> = ({
     }
   };
 
-  const handleConversationInput = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    setReply(event.currentTarget.value);
-  };
-
-  useEffect(() => {
-    console.log("com", comments);
-  }, [comments]);
-
   return (
     <Container>
       <ExpandableSection>
@@ -215,13 +228,16 @@ const CommentSection: React.FC<ICommentSection> = ({
                   {isEditing && isEditing.id === comment.id ? (
                     <textarea
                       id={`input-${comment.id}`}
-                      onChange={handleChange}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        setEditedComment(e.currentTarget.value);
+                      }}
+                      maxLength={90}
                       onKeyDown={(event) => {
                         if (event.key === "Enter") handleSubmit(event);
                       }}
                     />
                   ) : (
-                    <h3>{comment.content}</h3>
+                    <span>{comment.content}</span>
                   )}
                 </EditableContainer>
                 <img
@@ -255,19 +271,24 @@ const CommentSection: React.FC<ICommentSection> = ({
                 {comment.conversation &&
                   comment.conversation.length !== 0 &&
                   comment.conversation.map((conv) => (
-                    <div key={conv.id}>
+                    <ConversationContent key={conv.id}>
                       <span>{conv.content}</span>
                       <DateAndAuthor>
                         <span>{conv.user}</span>
                         <span>{conv.date}</span>
                       </DateAndAuthor>
-                    </div>
+                      <div></div>
+                    </ConversationContent>
                   ))}
                 <div>
                   <input
                     type="text"
                     placeholder="Reply..."
-                    onChange={handleConversationInput}
+                    onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                      if (e.currentTarget.value.length > 52) return;
+
+                      setReply(e.currentTarget.value);
+                    }}
                     value={reply}
                   />
                   <img
@@ -277,6 +298,7 @@ const CommentSection: React.FC<ICommentSection> = ({
                   />
                 </div>
               </ConversationContainer>
+              <div></div>
             </CommentContainer>
           ))}
         <div>
@@ -284,7 +306,12 @@ const CommentSection: React.FC<ICommentSection> = ({
         </div>
       </ExpandableSection>
       <ExpandedContainer expanded={expand}>
-        <input type="text" placeholder="Add a comment..." ref={commentRef} />
+        <input
+          type="text"
+          placeholder="Add a comment..."
+          ref={commentRef}
+          maxLength={98}
+        />
         <img src={Send} alt="send-comment" onClick={handleNewComment} />
       </ExpandedContainer>
     </Container>

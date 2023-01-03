@@ -17,12 +17,12 @@ export const Post = styled.div<IPost>`
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
-  height: 25rem;
+  height: 28rem;
   align-items: center;
   width: 25rem;
   padding: 1rem;
   border-radius: 0.5rem;
-  background-color: ${(props) => props.theme.colors.blue};
+  background-color: ${(props) => props.theme.colors.teamIt};
   cursor: pointer;
 
   ${(props) =>
@@ -37,6 +37,7 @@ export const Post = styled.div<IPost>`
 export const CardTitle = styled.div`
   display: flex;
   width: 100%;
+  height: 3rem;
   z-index: 10;
 
   align-items: center;
@@ -47,6 +48,26 @@ export const CardTitle = styled.div`
     width: auto;
     cursor: pointer;
     padding: 1rem;
+  }
+`;
+
+export const CardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 19rem;
+  width: 100%;
+
+  > span:first-of-type {
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: pre-line;
+  }
+
+  > span:last-of-type {
+    font-weight: 500;
+    font-size: 0.8rem;
   }
 `;
 

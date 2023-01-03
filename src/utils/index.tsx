@@ -88,4 +88,15 @@ const fetchComments = async (id: number) => {
   return Array.isArray(fetchedComments) && fetchedComments;
 };
 
-export { fetchComments, cacheSetUp, handleCache };
+const getDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  let month: string | number = today.getMonth() + 1;
+  let day: string | number = today.getDate();
+  if (day < 10) day = "0" + day;
+  if (month < 10) month = "0" + month;
+
+  return day + "-" + month + "-" + year;
+};
+
+export { fetchComments, cacheSetUp, handleCache, getDate, sortPosts };

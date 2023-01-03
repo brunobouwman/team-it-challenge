@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Star, StarGold } from "../../assets";
 import { useBaseContext } from "../../contexts";
@@ -11,6 +11,7 @@ import {
   Post,
   ImageContainer,
   Container,
+  CardContent,
 } from "./styles";
 
 interface ICard {
@@ -78,6 +79,8 @@ const Card: React.FC<ICard> = ({
     });
   };
 
+  useEffect(() => {}, []);
+
   return (
     <Container>
       <Post onClick={handleClick.bind(null, content)} isFeatured={isFeatured}>
@@ -94,8 +97,12 @@ const Card: React.FC<ICard> = ({
             />
           </ImageContainer>
         </CardTitle>
-        <span>{content.content}</span>
-        <span>{content.description}</span>
+        <CardContent>
+          <span>
+            {content.content.replaceAll("<p>", "").replaceAll("</p>", "\n\n")}
+          </span>
+          <span>{content.description}</span>
+        </CardContent>
         <CardFooter>
           <span>{content.publish_date}</span>
           <span>{content.author}</span>

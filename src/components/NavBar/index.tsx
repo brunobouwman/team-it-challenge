@@ -1,8 +1,16 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Grid, List } from "../../assets";
 import { useBaseContext } from "../../contexts";
+import { LayoutEnum } from "../../types/common";
 import { paths } from "../../utils/paths";
-import { Container, ActionsContainer } from "./styles";
+import {
+  Container,
+  ActionsContainer,
+  ToggleContainer,
+  GridContainer,
+  ListContainer,
+} from "./styles";
 
 const NavBar: React.FC = () => {
   const basePath = `@blog/${
@@ -27,16 +35,27 @@ const NavBar: React.FC = () => {
 
   return (
     <Container>
-      <h3 onClick={handleNavigate.bind(this, "/")}>My Blog</h3>
+      <h3 onClick={handleNavigate.bind(this, "/")}>IT Blog</h3>
       <ActionsContainer>
-        <span
+        <ToggleContainer
           onClick={() => {
             setLayout(!getLayout());
             localStorage.setItem(basePath, JSON.stringify(!getLayout()));
           }}
         >
-          Toggle
-        </span>
+          <GridContainer
+            layout={getLayout() ? LayoutEnum.GRID : LayoutEnum.LIST}
+          >
+            <img src={Grid} alt="Grid" />
+          </GridContainer>
+
+          <div></div>
+          <ListContainer
+            layout={getLayout() ? LayoutEnum.GRID : LayoutEnum.LIST}
+          >
+            <img src={List} alt="List" />
+          </ListContainer>
+        </ToggleContainer>
         <h3 onClick={handleNavigate.bind(this, "/favorites")}>Favorites</h3>
       </ActionsContainer>
     </Container>

@@ -9,7 +9,7 @@ export const Container = styled.div`
   align-items: center;
 
   > div:nth-child(2) {
-    margin-top: 5rem;
+    margin-top: 1rem;
   }
 `;
 

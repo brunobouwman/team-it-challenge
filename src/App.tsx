@@ -7,7 +7,7 @@ import Routes from "./routes";
 import { useBaseContext } from "./contexts";
 import { paths } from "./utils/paths";
 import { IComment, IPost } from "./types/common";
-import { cacheSetUp } from "./utils";
+import { cacheSetUp, sortPosts } from "./utils";
 
 const App: React.FC = () => {
   const { setFavorites, setPosts, setCommentIndex } = useBaseContext();
@@ -32,7 +32,7 @@ const App: React.FC = () => {
     }
     const highestIndex = Math.max(...comments.map((comment) => comment.id));
     setCommentIndex(highestIndex > 0 ? highestIndex + 1 : 1);
-    setPosts(parsedPosts);
+    setPosts(sortPosts(parsedPosts));
   }, []);
 
   useEffect(() => {
