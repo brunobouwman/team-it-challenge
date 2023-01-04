@@ -40,7 +40,7 @@ const App: React.FC = () => {
       const posts = await cacheSetUp(postsPath);
       if (!Array.isArray(posts)) return;
 
-      setPosts(posts);
+      setPosts(sortPosts(posts));
       const cachedFavorites = localStorage.getItem(favoritesPath);
       if (!cachedFavorites) return;
 
